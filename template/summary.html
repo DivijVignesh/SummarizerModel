@@ -115,7 +115,50 @@
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
+    <script>
+        function init(){
+            load = document.getElementById('loading')
+            load.hidden= true
+        }
+        async function send() {
+            input = document.getElementById('text').value;
+            display = document.getElementById('text1');
+            range = document.getElementById('range').value
+            load = document.getElementById('loading')
 
+            display.hidden= true
+            load.hidden=false
+            console.log(range)
+            count = getCount(input);
+            console.log(count)
+            max = parseInt((count * range) / 100)
+            console.log(max)
+            if (max < 80) {
+                max = 81
+            }
+            const response = await fetch('http://127.0.0.1:5000/predict', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Connection': 'keep-alive'
+                },
+                body: JSON.stringify({ "text": input, "max_words": max, "min_words": 80 })
+            })
+            // console.log(await response.json())
+            const obj = await response.json()
+            load.hidden=true
+            display.hidden=false
+            console.log(obj.summary)
+
+            display.value = obj.summary;
+        }
+        function getCount(str) {
+            return str.split(' ').filter(function (num) {
+                return num != ''
+            }).length;
+        }
+    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
