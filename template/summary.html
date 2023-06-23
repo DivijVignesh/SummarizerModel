@@ -57,7 +57,7 @@
                                 class="far fa-file-alt me-2"></i>Help</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="table.html" class="dropdown-item">404 Error</a>
-                            <a href="table.html" class="dropdown-item">lol</a>
+                            <a href="table.html" class="dropdown-item">Contact us</a>
                         </div>
                     </div>
                 </div>
@@ -93,8 +93,8 @@
                             <div class="bg-secondary rounded h-100 p-4">
                                 <h6 class="mb-4">Summarizer</h6>
                                 <table class="table">
-                                    <thead> Set your word Limit
-                                        <input id="range" type="range" min="10" max="100"
+                                    <input type="file" id="file" name="file" />
+                                    <thead style="text-align:right"><input id="range" type="range" min="10" max="100"
                                             oninput="num.value = this.value">
                                         <output id="num"></output>
                                     </thead>
@@ -105,7 +105,7 @@
                                             data-inputmask-inputformat="" style="color:aliceblue" inputmode="text"
                                             id="text"></textarea>
                                     </tbody>
-                                    <button type="button" class="btn btn-outline-success m" style="padding: 4px;"
+                                    <button type="button" class="btn btn-outline-success m" style="padding:1%;"
                                         onclick="send()">Submit</button>
                                 </table>
                             </div>
@@ -115,7 +115,6 @@
                                 <h6 class="mb-4">Summarized Text</h6>
                                 <table class="table table-striped">
                                     <tbody>
-
                                         <label class="form-label" for="fortext"></label>
                                         <!-- SPINNING SQUARES -->
                                         <div class="spinner-box" id="loading">
