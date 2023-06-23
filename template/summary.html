@@ -76,6 +76,9 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
+                <form class="d-none d-md-flex ms-4">
+                    <input class="form-control bg-dark border-0" type="search" placeholder="Search">
+                </form>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -98,6 +101,7 @@
                                             oninput="num.value = this.value">
                                         <output id="num"></output>
                                     </thead>
+                                    <input type = "file" id="file" name = "file" />
                                     <tbody>
                                         <label class="form-label" for="fortext"></label>
                                         <textarea class="form-control" style="height:80%" data-inputmask-alias="text"
@@ -105,7 +109,7 @@
                                             data-inputmask-inputformat="" style="color:aliceblue" inputmode="text"
                                             id="text"></textarea>
                                     </tbody>
-                                    <button type="button" class="btn btn-outline-success m" style="padding: 4px;"
+                                    <button type="button" class="btn btn-outline-success m"
                                         onclick="send()">Submit</button>
                                 </table>
                             </div>
@@ -115,6 +119,7 @@
                                 <h6 class="mb-4">Summarized Text</h6>
                                 <table class="table table-striped">
                                     <tbody>
+
 
                                         <label class="form-label" for="fortext"></label>
                                         <!-- SPINNING SQUARES -->
@@ -146,6 +151,12 @@
                                 Transforming education for the next generation<br>
                                 &copy; <a href="#">COPYRIGHT 2023 GENZ.AI </a><br>ALL RIGHTS RESERVED
                             </div>
+                            <div class="col-12 col-sm-6 text-center text-sm-end">
+                                <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                                World<br>
+                                9876543219<br>
+                                genz.ai@gmail.com
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -156,6 +167,7 @@
 
 
         <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
     <script>
         function init() {
@@ -167,9 +179,10 @@
             display = document.getElementById('text1');
             range = document.getElementById('range').value
             load = document.getElementById('loading')
-
             display.hidden = true
             load.hidden = false
+            if(document.getElementById('file').files.length==0){
+            
             console.log(range)
             count = getCount(input);
             console.log(count)
@@ -194,6 +207,19 @@
             console.log(obj.summary)
 
             display.value = obj.summary;
+        }
+        else{
+            let file= document.getElementById('file').files[0]
+            let formData = new FormData();
+            formData.append("file", file);
+            const r= await fetch('/upload', {method: "POST", body: formData});
+            console.log(r.status)
+            const obj = await r.json()
+            load.hidden = true
+            display.hidden = false
+            console.log(obj)
+            display.value = obj.summary;
+            }
         }
         function getCount(str) {
             return str.split(' ').filter(function (num) {
