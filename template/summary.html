@@ -88,7 +88,61 @@
                 </div>
             </nav>
             <!-- Navbar End -->
+            <!-- Table Start -->
+            <div class="container" style="height:fit-content">
+                <div class="container-fluid pt-4 px-4">
+                    <div class="row g-4 pb-4" style="height: 70vh;">
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-secondary rounded h-100 p-4">
+                                <h6 class="mb-4">Summarizer</h6>
+                                <table class="table">
+                                    <thead> Set your word Limit
+                                        <input id="range" type="range" min="10" max="100"
+                                            oninput="num.value = this.value">
+                                        <output id="num"></output>
+                                    </thead>
+                                    <input type = "file" id="file" name = "file" />
+                                    <tbody>
+                                        <label class="form-label" for="fortext"></label>
+                                        <textarea class="form-control" style="height:80%" data-inputmask-alias="text"
+                                            placeholder="Drop your text which needed to be summarized" type="text"
+                                            data-inputmask-inputformat="" style="color:aliceblue" inputmode="text"
+                                            id="text"></textarea>
+                                    </tbody>
+                                    <button type="button" class="btn btn-outline-success m"
+                                        onclick="send()">Submit</button>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-secondary rounded h-100 p-4">
+                                <h6 class="mb-4">Summarized Text</h6>
+                                <table class="table table-striped">
+                                    <tbody>
 
+
+                                        <label class="form-label" for="fortext"></label>
+                                        <!-- SPINNING SQUARES -->
+                                        <div class="spinner-box" id="loading">
+                                            <div class="configure-border-1">
+                                                <div class="configure-core"></div>
+                                            </div>
+                                            <div class="configure-border-2">
+                                                <div class="configure-core"></div>
+                                            </div>
+                                        </div>
+                                        <textarea class="form-control" style="height:80%" data-inputmask-alias="text"
+                                            placeholder="Your summarized text will be displayed here" type="text"
+                                            data-inputmask-inputformat="" style="color:aliceblue" inputmode="text"
+                                            id="text1">
+                            </textarea>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Table End -->
                 <!-- Footer Start -->
                 <div class="container-fluid pt-4 px-4">
                     <div class="bg-secondary rounded-top p-4">
@@ -116,18 +170,19 @@
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
     <script>
-        function init(){
+        function init() {
             load = document.getElementById('loading')
-            load.hidden= true
+            load.hidden = true
         }
         async function send() {
             input = document.getElementById('text').value;
             display = document.getElementById('text1');
             range = document.getElementById('range').value
             load = document.getElementById('loading')
-
-            display.hidden= true
-            load.hidden=false
+            display.hidden = true
+            load.hidden = false
+            if(document.getElementById('file').files.length==0){
+            
             console.log(range)
             count = getCount(input);
             console.log(count)
@@ -147,11 +202,24 @@
             })
             // console.log(await response.json())
             const obj = await response.json()
-            load.hidden=true
-            display.hidden=false
+            load.hidden = true
+            display.hidden = false
             console.log(obj.summary)
 
             display.value = obj.summary;
+        }
+        else{
+            let file= document.getElementById('file').files[0]
+            let formData = new FormData();
+            formData.append("file", file);
+            const r= await fetch('/upload', {method: "POST", body: formData});
+            console.log(r.status)
+            const obj = await r.json()
+            load.hidden = true
+            display.hidden = false
+            console.log(obj)
+            display.value = obj.summary;
+            }
         }
         function getCount(str) {
             return str.split(' ').filter(function (num) {
