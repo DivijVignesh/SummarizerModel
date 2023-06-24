@@ -98,6 +98,7 @@
                                             oninput="num.value = this.value">
                                         <output id="num"></output>
                                     </thead>
+                                    <input type = "file" id="file" name = "file" />
                                     <tbody>
                                         <label class="form-label" for="fortext"></label>
                                         <textarea class="form-control" style="height:80%" data-inputmask-alias="text"
@@ -105,7 +106,11 @@
                                             data-inputmask-inputformat="" style="color:aliceblue" inputmode="text"
                                             id="text"></textarea>
                                     </tbody>
+<<<<<<< HEAD
                                     <button type="button" class="btn btn-outline-success m" style="padding:1%;"
+=======
+                                    <button type="button" class="btn btn-outline-success m"style="padding: 4px;"
+>>>>>>> 989416e01679c7a265697a15b6a61326ef5a3740
                                         onclick="send()">Submit</button>
                                 </table>
                             </div>
@@ -115,6 +120,11 @@
                                 <h6 class="mb-4">Summarized Text</h6>
                                 <table class="table table-striped">
                                     <tbody>
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 989416e01679c7a265697a15b6a61326ef5a3740
                                         <label class="form-label" for="fortext"></label>
                                         <!-- SPINNING SQUARES -->
                                         <div class="spinner-box" id="loading">
@@ -129,7 +139,7 @@
                                             placeholder="Your summarized text will be displayed here" type="text"
                                             data-inputmask-inputformat="" style="color:aliceblue" inputmode="text"
                                             id="text1">
-                            </textarea>
+                                        </textarea>
                                     </tbody>
                                 </table>
                             </div>
@@ -166,9 +176,10 @@
             display = document.getElementById('text1');
             range = document.getElementById('range').value
             load = document.getElementById('loading')
-
             display.hidden = true
             load.hidden = false
+            if(document.getElementById('file').files.length==0){
+            
             console.log(range)
             count = getCount(input);
             console.log(count)
@@ -193,6 +204,19 @@
             console.log(obj.summary)
 
             display.value = obj.summary;
+        }
+        else{
+            let file= document.getElementById('file').files[0]
+            let formData = new FormData();
+            formData.append("file", file);
+            const r= await fetch('/upload', {method: "POST", body: formData});
+            console.log(r.status)
+            const obj = await r.json()
+            load.hidden = true
+            display.hidden = false
+            console.log(obj)
+            display.value = obj.summary;
+            }
         }
         function getCount(str) {
             return str.split(' ').filter(function (num) {
