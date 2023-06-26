@@ -1,11 +1,13 @@
 from flask import *
 import json 
+from transformers import PegasusForConditionalGeneration, PegasusTokenizer
 from werkzeug.utils import secure_filename
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 app=Flask(__name__,template_folder='template', static_folder='static')
 app.config['UPLOAD_FOLDER']= 'files'
 import pdfread
 import os
+import torch
 
 @app.route('/')
 def hello():
@@ -42,11 +44,21 @@ def get_FilePrediction():
     return jsonify(dictToReturn)
 
 def summarize(sequence, max_length, min_length):
-    tokenizer=AutoTokenizer.from_pretrained('T5-base')
-    model=AutoModelForSeq2SeqLM.from_pretrained('T5-base', return_dict=True) 
-    inputs=tokenizer.encode("sumarize: " +sequence,return_tensors='pt', max_length=512, truncation=True)
-    output = model.generate(inputs, min_length=int(min_length), max_length=int(max_length))
-    summary=tokenizer.decode(output[0],skip_special_tokens=True)
+    # tokenizer=AutoTokenizer.from_pretrained('T5-base')
+    # model=AutoModelForSeq2SeqLM.from_pretrained('T5-base', return_dict=True) 
+    # inputs=tokenizer.encode("sumarize: " +sequence,return_tensors='pt', max_length=512, truncation=True)
+    # output = model.generate(inputs, min_length=int(min_length), max_length=int(max_length))
+    # summary=tokenizer.decode(output[0],skip_special_tokens=True)
+    torch.cuda.empty_cache()
+    model_name = 'google/pegasus-xsum'
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    tokenizer = PegasusTokenizer.from_pretrained(model_name)
+    model = PegasusForConditionalGeneration.from_pretrained(model_name).to(device)
+    model.config.max_position_embeddings=512
+    print(model.config.max_position_embeddings)
+    batch = tokenizer(sequence, truncation=True, padding='max_length', return_tensors="pt").to(device)
+    translated = model.generate(**batch,min_length=100, max_new_tokens=400)
+    summary = tokenizer.batch_decode(translated, skip_special_tokens=True)
     return summary
 if __name__ == '__main__':  
    app.run()
