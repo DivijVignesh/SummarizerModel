@@ -86,53 +86,52 @@
             </nav>
             <!-- Navbar End -->
             <!-- Table Start -->
-            <div class="container" style="height:fit-content">
-                <div class="container-fluid pt-4 px-4">
-                    <div class="row g-4 pb-4" style="height: 70vh;">
-                        <div class="col-sm-12 col-xl-6">
-                            <div class="bg-secondary rounded h-100 p-4">
-                                <h6 class="mb-4">Summarizer</h6>
-                                <table class="table">
-                                    <input type="file" id="file" name="file" />
-                                    <thead style="text-align:right"><input id="range" type="range" min="10" max="100"
-                                            oninput="num.value = this.value">
-                                        <output id="num"></output>
-                                    </thead>
-                                    <input type = "file" id="file" name = "file" />
-                                    <tbody>
-                                        <label class="form-label" for="fortext"></label>
-                                        <textarea class="form-control" style="height:80%" data-inputmask-alias="text"
-                                            placeholder="Drop your text which needed to be summarized" type="text"
-                                            data-inputmask-inputformat="" style="color:aliceblue" inputmode="text"
-                                            id="text"></textarea>
-                                    </tbody>
-                                    <button type="button" class="btn btn-outline-success m" style="padding:1%;"
-                                        onclick="send()">Submit</button>
-                                </table>
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-2">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Summarizer</h6>
+                            <div class="form-floating mb-3 text-end">
+                                <label class="form-label" for="customRange1">Word Limit</label>
+                                <div class="range w-25">
+                                    <input type="range" class="form-range" min="10" max="500"
+                                        oninput="num.value = this.value">
+                                    <output id="num"></output>
+                                </div>
+                            </div>
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Drop your text here" id="floatingTextarea"
+                                    style="height: 250px;"></textarea>
+                                <label for="floatingTextarea">Text needed to be summarized</label>
+                            </div> <br>
+                            <div class="separator">Or</div>
+                            <br>
+                            <div class="mb-3">
+                                <input class="form-control bg-dark" type="file" id="formFile">
+                            </div>
+                            <br>
+                            <div class="m-n2">
+                                <button class="btn btn-outline-primary w-100 m-2" type="button">Submit</button>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-xl-6">
-                            <div class="bg-secondary rounded h-100 p-4">
-                                <h6 class="mb-4">Summarized Text</h6>
-                                <table class="table table-striped">
-                                    <tbody>
-                                        <label class="form-label" for="fortext"></label>
-                                        <!-- SPINNING SQUARES -->
-                                        <div class="spinner-box" id="loading">
-                                            <div class="configure-border-1">
-                                                <div class="configure-core"></div>
-                                            </div>
-                                            <div class="configure-border-2">
-                                                <div class="configure-core"></div>
-                                            </div>
-                                        </div>
-                                        <textarea class="form-control" style="height:80%" data-inputmask-alias="text"
-                                            placeholder="Your summarized text will be displayed here" type="text"
-                                            data-inputmask-inputformat="" style="color:aliceblue" inputmode="text"
-                                            id="text1">
-                                        </textarea>
-                                    </tbody>
-                                </table>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Summarized Data</h6>
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="text will be displayed here"
+                                    id="floatingTextarea" style="height: 425px;"></textarea>
+                                <label for="floatingTextarea">Your Summarized Text</label>
+                            </div> <br>
+                            <div class="m-n2 text-end">
+                                <button type="button" class="btn btn-outline-light m-2" title="copy">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                        class="bi bi-clipboard" viewBox="0 0 16 16">
+                                        <path
+                                            d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                        <path
+                                            d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                    </svg></button>
                             </div>
                         </div>
                     </div>
@@ -143,93 +142,96 @@
                     <div class="bg-secondary rounded-top p-4">
                         <div class="row">
                             <div class="col-12 col-sm-6 text-center text-sm-start">
-                                Transforming education for the next generation<br>
-                                &copy; <a href="#">COPYRIGHT 2023 GENZ.AI </a><br>ALL RIGHTS RESERVED
+                                &copy; <a href="#">GENZ.AI</a>, All Right Reserved.
+                            </div>
+                            <div class="col-12 col-sm-6 text-center text-sm-end">
+                                Designed By <a href="https://htmlcodex.com">HTML Codex</a>
+                                <br>Distributed By: <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
                             </div>
                         </div>
                     </div>
                 </div>
+                <!-- Footer End -->
             </div>
-            <!-- Footer End -->
+            <!-- Content End -->
+
+
+            <!-- Back to Top -->
         </div>
-        <!-- Content End -->
-
-
-        <!-- Back to Top -->
-    </div>
-    <script>
-        function init() {
-            load = document.getElementById('loading')
-            load.hidden = true
-        }
-        async function send() {
-            input = document.getElementById('text').value;
-            display = document.getElementById('text1');
-            range = document.getElementById('range').value
-            load = document.getElementById('loading')
-            display.hidden = true
-            load.hidden = false
-            if(document.getElementById('file').files.length==0){
-            
-            console.log(range)
-            count = getCount(input);
-            console.log(count)
-            max = parseInt((count * range) / 100)
-            console.log(max)
-            if (max < 80) {
-                max = 81
+        <script>
+            function init() {
+                load = document.getElementById('loading')
+                load.hidden = true
             }
-            const response = await fetch('http://127.0.0.1:5000/predict', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Connection': 'keep-alive'
-                },
-                body: JSON.stringify({ "text": input, "max_words": max, "min_words": 80 })
-            })
-            // console.log(await response.json())
-            const obj = await response.json()
-            load.hidden = true
-            display.hidden = false
-            console.log(obj.summary)
+            async function send() {
+                input = document.getElementById('text').value;
+                display = document.getElementById('text1');
+                range = document.getElementById('range').value
+                load = document.getElementById('loading')
+                display.hidden = true
+                load.hidden = false
+                if (document.getElementById('file').files.length == 0) {
 
-            display.value = obj.summary;
-        }
-        else{
-            let file= document.getElementById('file').files[0]
-            let formData = new FormData();
-            formData.append("file", file);
-            const r= await fetch('/upload', {method: "POST", body: formData});
-            console.log(r.status)
-            const obj = await r.json()
-            load.hidden = true
-            display.hidden = false
-            console.log(obj)
-            display.value = obj.summary;
+                    console.log(range)
+                    count = getCount(input);
+                    console.log(count)
+                    max = parseInt((count * range) / 100)
+                    console.log(max)
+                    if (max < 80) {
+                        max = 81
+                    }
+                    const response = await fetch('http://127.0.0.1:5000/predict', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Connection': 'keep-alive'
+                        },
+                        body: JSON.stringify({ "text": input, "max_words": max, "min_words": 80 })
+                    })
+                    // console.log(await response.json())
+                    const obj = await response.json()
+                    load.hidden = true
+                    display.hidden = false
+                    console.log(obj.summary)
+
+                    display.value = obj.summary;
+                }
+                else {
+                    let file = document.getElementById('file').files[0]
+                    let formData = new FormData();
+                    formData.append("file", file);
+                    const r = await fetch('/upload', { method: "POST", body: formData });
+                    console.log(r.status)
+                    const obj = await r.json()
+                    load.hidden = true
+                    display.hidden = false
+                    console.log(obj)
+                    display.value = obj.summary;
+                }
             }
-        }
-        function getCount(str) {
-            return str.split(' ').filter(function (num) {
-                return num != ''
-            }).length;
-        }
-    </script>
+            function getCount(str) {
+                return str.split(' ').filter(function (num) {
+                    return num != ''
+                }).length;
+            }
+        </script>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url_for('static', filename='lib/chart/chart.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='lib/tempusdominus/js/moment.min.js') }}"></script>
-    <script
-        src="{{ url_for('static', filename='lib/tempusdominus/js/moment-timezone.min.js') }}lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="{{ url_for('static', filename='lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{{ url_for('static', filename='lib/chart/chart.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/easing/easing.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/waypoints/waypoints.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/owlcarousel/owl.carousel.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='lib/tempusdominus/js/moment.min.js') }}"></script>
+        <script
+            src="{{ url_for('static', filename='lib/tempusdominus/js/moment-timezone.min.js') }}lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script
+            src="{{ url_for('static', filename='lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
 
-    <!-- Template Javascript -->
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+        <!-- Template Javascript -->
+        <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 
 </html>
