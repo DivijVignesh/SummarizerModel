@@ -8,3 +8,7 @@ This project consists of a web interface using which the user can enter text or 
 `pip install -r requirements.txt`
 
 This command will download all the libraries which are required for running this model 
+
+**Run:**
+
+`python modelapi.py`
