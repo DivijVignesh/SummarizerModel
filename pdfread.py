@@ -1,5 +1,4 @@
 from PyPDF2 import PdfReader
-from modelapi import summarize
 import docx
 
 def readText(inp):

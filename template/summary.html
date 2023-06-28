@@ -47,22 +47,22 @@
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark">
-                <a href="summary.html" class="navbar-brand mx-4 mb-3">
+                <a href="" class="navbar-brand mx-4 mb-3">
                     <h3 class="text-primary">GENZ.AI</h3>
                 </a>
                 <div class="navbar-nav w-100">
-                    <a href="summary.html" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Summarizer</a>
+                    <a href="" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Summarizer</a>
                     <div class="navbar-nav w-100">
-                        <a href="404.html" class="nav-item nav-link"><i
+                        <a href="/error" class="nav-item nav-link"><i
                                 class="fa fa-keyboard me-2"></i>Paraphraser</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="404.html" class="dropdown-item">404 Error</a>
+                            <a href="/error" class="dropdown-item">404 Error</a>
                         </div>
                         <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
+                            <a href="/error" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i
                                     class="far fa-file-alt me-2"></i>Help</a>
                             <div class="dropdown-menu bg-transparent border-0">
-                                <a href="summary.html" class="dropdown-item">Contact us </a>
+                                <a href="/error" class="dropdown-item">Contact us </a>
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-                <a href="summary.html" class="navbar-brand d-flex d-lg-none me-4">
+                <a href="/error" class="navbar-brand d-flex d-lg-none me-4">
                     <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
@@ -102,24 +102,24 @@
                             <div class="form-floating mb-3 text-end">
                                 <label class="form-label" for="customRange1">Word Limit</label>
                                 <div class="range w-25">
-                                    <input type="range" class="form-range" min="10" max="500"
+                                    <input type="range" id="range" class="form-range" min="10" max="500"
                                         oninput="num.value = this.value">
                                     <output id="num"></output>
                                 </div>
                             </div>
                             <div class="form-floating">
-                                <textarea class="form-control" placeholder="Drop your text here" id="floatingTextarea"
+                                <textarea class="form-control" placeholder="Drop your text here" id="text"
                                     style="height: 250px;"></textarea>
                                 <label for="floatingTextarea">Text needed to be summarized</label>
                             </div> <br>
                             <div class="separator">Or</div>
                             <br>
                             <div class="mb-3">
-                                <input class="form-control bg-dark" type="file" id="formFile">
+                                <input class="form-control bg-dark" type="file" id="file">
                             </div>
                             <br>
                             <div class="m-n2">
-                                <button class="btn btn-outline-primary w-100 m-2" type="button">Submit</button>
+                                <button class="btn btn-outline-primary w-100 m-2" type="submit" onclick="send()">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -127,8 +127,17 @@
                         <div class="bg-secondary rounded h-100 p-4">
                             <h6 class="mb-4">Summarized Data</h6>
                             <div class="form-floating">
+                                <!-- SPINNING SQUARES -->
+                                <div class="spinner-box" id="loading">
+                                    <div class="configure-border-1">
+                                        <div class="configure-core"></div>
+                                    </div>
+                                    <div class="configure-border-2">
+                                        <div class="configure-core"></div>
+                                    </div>
+                                </div>
                                 <textarea class="form-control" placeholder="text will be displayed here"
-                                    id="floatingTextarea" style="height: 425px;"></textarea>
+                                    id="text1" style="height: 425px;"></textarea>
                                 <label for="floatingTextarea">Your Summarized Text</label>
                             </div> <br>
                             <div class="m-n2 text-end">
@@ -198,9 +207,16 @@
                 const obj = await response.json()
                 load.hidden = true
                 display.hidden = false
+                console.log(response.status)
+                if(obj.status==200){
                 console.log(obj.summary)
 
-                display.value = obj.summary;
+                display.value = obj.summary;}
+                else {
+                    console.log("Error providing summary")
+
+                display.value = "There is an error. Error Code:"+obj.status;
+                }
             }
             else {
                 let file = document.getElementById('file').files[0]
@@ -211,8 +227,15 @@
                 const obj = await r.json()
                 load.hidden = true
                 display.hidden = false
-                console.log(obj)
-                display.value = obj.summary;
+                if(obj.status==200){
+                console.log(obj.summary)
+
+                display.value = obj.summary;}
+                else {
+                    console.log("Error providing summary")
+
+                display.value = "There is an error occured. Error Code:"+obj.status;
+                }
             }
         }
         function getCount(str) {
