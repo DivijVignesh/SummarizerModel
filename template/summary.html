@@ -53,8 +53,7 @@
                 <div class="navbar-nav w-100">
                     <a href="" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Summarizer</a>
                     <div class="navbar-nav w-100">
-                        <a href="/error" class="nav-item nav-link"><i
-                                class="fa fa-keyboard me-2"></i>Paraphraser</a>
+                        <a href="/error" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Paraphraser</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="/error" class="dropdown-item">404 Error</a>
                         </div>
@@ -119,7 +118,8 @@
                             </div>
                             <br>
                             <div class="m-n2">
-                                <button class="btn btn-outline-primary w-100 m-2" type="submit" onclick="send()">Submit</button>
+                                <button class="btn btn-outline-primary w-100 m-2" type="submit" id="submit"
+                                    onclick="send()">Submit</button>
                             </div>
                         </div>
                     </div>
@@ -136,19 +136,20 @@
                                         <div class="configure-core"></div>
                                     </div>
                                 </div>
-                                <textarea class="form-control" placeholder="text will be displayed here"
-                                    id="text1" style="height: 425px;"></textarea>
+                                <textarea class="form-control" placeholder="text will be displayed here" id="text1"
+                                    style="height: 425px;"></textarea>
                                 <label for="floatingTextarea">Your Summarized Text</label>
                             </div> <br>
                             <div class="m-n2 text-end">
-                                <button type="button" class="btn btn-outline-light m-2" title="copy">
+                                <button type="button" id="copy1" class="btn btn-outline-light m-2" title="copy"
+                                    onclick="copytext()">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
                                         class="bi bi-clipboard" viewBox="0 0 16 16">
                                         <path
                                             d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
                                         <path
                                             d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
-                                    </svg></button>
+                                    </svg>Copy</button>
                             </div>
                         </div>
                     </div>
@@ -182,6 +183,10 @@
             display = document.getElementById('text1');
             range = document.getElementById('range').value
             load = document.getElementById('loading')
+            submit= document.getElementById('submit')
+            copy= document.getElementById('copy1')
+            copy.disabled=true;
+            submit.disabled=true;
             display.hidden = true
             load.hidden = false
             if (document.getElementById('file').files.length == 0) {
@@ -208,14 +213,17 @@
                 load.hidden = true
                 display.hidden = false
                 console.log(response.status)
-                if(obj.status==200){
-                console.log(obj.summary)
+                submit.disabled=false;
+                copy.disabled=false;
+                if (obj.status == 200) {
+                    console.log(obj.summary)
 
-                display.value = obj.summary;}
+                    display.value = obj.summary;
+                }
                 else {
                     console.log("Error providing summary")
 
-                display.value = "There is an error. Error Code:"+obj.status;
+                    display.value = "There is an error. Error Code:" + obj.status;
                 }
             }
             else {
@@ -227,14 +235,17 @@
                 const obj = await r.json()
                 load.hidden = true
                 display.hidden = false
-                if(obj.status==200){
-                console.log(obj.summary)
+                submit.disabled= false
+                copy.disabled=false;
+                if (obj.status == 200) {
+                    console.log(obj.summary)
 
-                display.value = obj.summary;}
+                    display.value = obj.summary;
+                }
                 else {
                     console.log("Error providing summary")
 
-                display.value = "There is an error occured. Error Code:"+obj.status;
+                    display.value = "There is an error occured. Error Code:" + obj.status;
                 }
             }
         }
@@ -243,6 +254,18 @@
                 return num != ''
             }).length;
         }
+        function copytext() {
+            text = document.getElementById('text1');
+            btn = document.getElementById('copy1');
+            text.select();
+            text.setSelectionRange(0, 99999); // For mobile devices
+
+            // Copy the text inside the text field
+            navigator.clipboard.writeText(text.value);
+            console.log(btn.value)
+            btn.value="Copied!"
+        }
+
     </script>
 
     <!-- JavaScript Libraries -->
